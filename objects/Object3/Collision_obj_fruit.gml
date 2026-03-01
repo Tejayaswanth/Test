@@ -1,9 +1,12 @@
-// Check if we are missing health
-if (my_health < max_health)
+// 1. Play the eating sound!
+audio_play_sound(snd_fruit, 1, false);
+
+// 2. Heal the player by 1 chunk
+// We use clamp to make sure health never goes above your max_health (7)
+my_health = clamp(my_health + 1, 0, max_health); 
+
+// 3. Destroy the fruit so it's "eaten"
+with (other) 
 {
-    // Heal 1 chunk of health!
-    my_health += 1;
-    
-    // Destroy the fruit so you can't eat it twice!
-    instance_destroy(other);
+    instance_destroy();
 }

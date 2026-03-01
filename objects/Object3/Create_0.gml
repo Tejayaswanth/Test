@@ -3,7 +3,7 @@ my_score = 0;
 hsp = 0;      
 vsp = 0;      
 grv = 0.3;    
-walksp = 4;   
+walksp = 2.5;   
 
 // This grabs your exact Tile Layer! 
 // (Make sure your layer is actually named "Tiles_1")

@@ -39,66 +39,65 @@ y = y + vsp;
 
 // --- ANIMATION SYSTEM ---
 
-// 1. Are we currently invincible/hurt?
 if (can_take_damage == false)
 {
-    // Force the red flashing HIT animation!
     sprite_index = spr_player_hit;
-    
-    // Keep facing the correct direction while flashing
     if (hsp != 0) image_xscale = sign(hsp); 
 }
 else 
 {
-    // 2. Normal, healthy animations!
     if (hsp != 0) 
     {
-        sprite_index = spr_player_run; // Switch to the running animation
-        image_xscale = sign(hsp);      // Flip left/right
+        sprite_index = spr_player_run; 
+        image_xscale = sign(hsp);      
     }
     else 
     {
-        sprite_index = Sprite5;        // Switch back to your idle frame
+        sprite_index = Sprite5;        
     }
 }
+
+// --- FALLING DEATH CHECK ---
 if (y > room_height)
 {
+    // Play the death sound right before restarting!
+    audio_play_sound(snd_death, 10, false);
     room_restart();
 }
-// --- MINING SYSTEM ---
-// Notice we changed "check_pressed" to just "check" so it works while HOLDING!
+
+// --- MINING SYSTEM (FIXED RHYTHM) ---
+
 if (keyboard_check(ord("E")))
 {
     var target_x = x + (sign(image_xscale) * 20);
     var target_y = y; 
     
-    // Check what is in front of us
     var tile = tilemap_get_at_pixel(tilemap, target_x, target_y);
     
-    // If we are hitting a dirt block...
     if (tile > 0)
     {
-        // Increase the timer!
+        // This is the repeating sound!
+        // It plays at frame 0, 20, 40, 60, 80, 100
+        if (mining_timer % 20 == 0)
+        {
+            audio_play_sound(snd_mine, 1, false);
+        }
+
         mining_timer += 1;
         
-        // If we held it for 2 seconds (120 frames)
+        // Break the block after 2 seconds (120 frames)
         if (mining_timer >= 120)
         {
-            // BREAK IT! Set that pixel to 0 (air)
             tilemap_set_at_pixel(tilemap, 0, target_x, target_y);
-            
-            // Reset the timer so we can start mining the next block
             mining_timer = 0; 
         }
     }
     else
     {
-        // If we are holding E but pointing at empty air, reset the timer
         mining_timer = 0;
     }
 }
 else
 {
-    // If we let go of the E key, reset the timer completely
     mining_timer = 0;
 }

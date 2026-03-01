@@ -1,5 +1,11 @@
-// Add 10 points!
+// 1. Play the shiny coin sound!
+audio_play_sound(snd_coin, 1, false);
+
+// 2. Add to your score
 my_score += 10;
 
-// Destroy the coin so you can't collect it twice!
-instance_destroy(other);
+// 3. Destroy the coin so it vanishes
+with (other) 
+{
+    instance_destroy();
+}

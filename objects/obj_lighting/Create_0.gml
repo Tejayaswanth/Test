@@ -1,2 +1,2 @@
 darkness_surface = -1;
-light_size = 65; // This cuts the starting light circle exactly in half!
+light_size = 80; // You can change this number to make the circle bigger/smaller!

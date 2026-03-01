@@ -3,6 +3,9 @@
 // 1. Check if the player is allowed to take damage right now
 if (can_take_damage == true)
 {
+    // PLAY THE HIT SOUND!
+    audio_play_sound(snd_hit, 1, false);
+
     // Lose exactly 1 chunk of the health bar
     my_health -= 1;          
     

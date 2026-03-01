@@ -24,6 +24,7 @@ if (instance_exists(Object3)) {
     var player_x_on_screen = Object3.x - cam_x;
     var player_y_on_screen = Object3.y - cam_y;
     
+    // Draw the perfect, un-shrinking circle!
     draw_circle(player_x_on_screen, player_y_on_screen, light_size, false);
 }
 
